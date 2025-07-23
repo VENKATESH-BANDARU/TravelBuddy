@@ -42,7 +42,6 @@ const adminLoginService = async (req) => {
     // deviceInfo: deviceInfo(req),
     token: uuidv4(),
   };
-console.log(decryptedPassword)
   const user = await adminModel.findOne({
     userName: req.body.userName,
     password: decryptedPassword,
@@ -66,7 +65,7 @@ console.log(decryptedPassword)
       },
     }
   );
-
+console.log("body", body.token)
   const tokenPayload = {
     adminId: adminId,
     WrEId: user.WrEId,
@@ -78,7 +77,6 @@ console.log(decryptedPassword)
     token: body.token,
   };
 
-  //* token created
   const token = generateToken(tokenPayload);
 
   return {

@@ -42,9 +42,38 @@ function applyBaseTransform(schema, opts = {}) {
   schema.set("toObject", { transform });
 }
 
+const ERROR_CODES = {
+  INVALID_INPUT: "INVALID_INPUT",
+  SERVER_ERROR: "SERVER_ERROR",
+  AUTH_ERROR: "AUTH_ERROR",
+  INVALID_TOKEN: "INVALID_TOKEN",
+};
+
+const error = (message, errorCode, status) => {
+  return {
+    success: false,
+    status: status,
+    error: {
+      code: errorCode,
+      message: message || "Internal Server Error",
+    },
+  };
+};
+
+const success = (result, status) => {
+  return {
+    success: true,
+    status: status,
+    result: result,
+  };
+};
+
 module.exports = {
   successMessage,
   createMessage,
   failureMessage,
   applyBaseTransform,
+  ERROR_CODES,
+  error,
+  success,
 };
