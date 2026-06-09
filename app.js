@@ -4,6 +4,8 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 require("dotenv").config();
+const swaggerUi = require('swagger-ui-express');
+const swaggerJsDoc = require('swagger-jsdoc');
 
 const indexRouter = require('./routes/index');
 
@@ -54,15 +56,25 @@ app.use((err, req, res, next) => {
   return res.render("error");
 });
 
+const swaggerOptions = {
+  definition: {
+    openapi: '3.0.0',
+    info: {
+      title: 'Travel Buddy',
+      version: '1.0.0',
+      description: 'API documentation',
+    },
+    servers: [
+      {
+        url: 'http://localhost:6000',
+      },
+    ],
+  },
+  apis: ['./routes/*.js'],
+};
 
-// app.use(function(err, req, res, next) {
-//   // set locals, only providing error in development
-//   res.locals.message = err.message;
-//   res.locals.error = req.app.get('env') === 'development' ? err : {};
+const swaggerDocs = swaggerJsDoc(swaggerOptions);
 
-//   // render the error page
-//   res.status(err.status || 500);
-//   res.render('error');
-// });
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 module.exports = app;

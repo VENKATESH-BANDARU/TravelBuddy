@@ -5,16 +5,17 @@ const crypto = require("crypto");
 
 const passwordEncrypt = async (passcode) => {
   try {
-    const hashedPassword = await bcrypt.hash(passcode, 10);
+    const saltRounds = Number(process.env.SALT_ROUNDS) || 12;
+    const hashedPassword = await bcrypt.hash(passcode, saltRounds);
     return hashedPassword;
   } catch (error) {
     return error.message;
   }
 };
 
-const comparePassword = async (passcode, newPasscode) => {
+const comparePassword = async (passcode, oldPasscode) => {
   try {
-    const match = await bcrypt.compare(passcode, newPasscode);
+    const match = await bcrypt.compare(passcode, oldPasscode);
     return match;
   } catch (error) {
     return error.message;
