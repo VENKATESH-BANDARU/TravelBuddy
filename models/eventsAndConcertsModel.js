@@ -1,0 +1,100 @@
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
+const ObjectId = mongoose.Schema.Types.ObjectId;
+
+const eventsAndConcertsModel = new Schema(
+  {
+    title: {
+      type: String,
+      default: null,
+      trim: true,
+    },
+    description: {
+      type: String,
+      default: null,
+    },
+    eventType: {
+      type: Number,
+      default: null,
+    },
+    others: {
+      type: String,
+      default: null,
+    },
+    images: {
+      type: [String],
+      default: null,
+    },
+    defaultImage: {
+      type: String,
+      default: null,
+    },
+    video: {
+      type: String,
+      default: null,
+    },
+    countryId: {
+      type: ObjectId,
+      ref: "Countries",
+      default: null,
+    },
+    stateId: {
+      type: ObjectId,
+      ref: "States",
+      default: null,
+    },
+    city: {
+      type: String,
+      default: null,
+    },
+    eventPlace: {
+      type: String,
+      default: null,
+    },
+    address: {
+      type: String,
+      default: null,
+    },
+    startDateAndTime: {
+      type: Date,
+      default: null,
+    },
+    EndDateAndTime: {
+      type: Date,
+      default: null,
+    },
+    isBookingAvailable: {
+      type: Boolean,
+      default: false,
+    },
+    bookingOpen: {
+      type: Boolean,
+      default: false,
+    },
+    displayOrder: {
+      type: Number,
+      default: null,
+    },
+    isActive: {
+      type: Boolean,
+      default: true,
+    },
+    isDeleted: {
+      type: Boolean,
+      default: false,
+    },
+    deletedBy: {
+      type: Number,
+      default: null,
+    },
+    deletedAt: {
+      type: Date,
+      default: null,
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
+
+module.exports = mongoose.model("EventsAndConcert", eventsAndConcertsModel);
